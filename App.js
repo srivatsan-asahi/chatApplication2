@@ -55,13 +55,20 @@ const App = () => {
   if (!user) {
     console.log("useruuid===>", user)
     return (
-      <View style={{ justifyContent: 'space-around' }}>
-        <TouchableOpacity onPress={() => onPressUser('srivastan@asahitechnologies.com', 'Geetha18')}>
-          <Text>User1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => onPressUser('vastanece1999@gmail.com', 'Geetha18')}>
-          <Text>User2</Text>
-        </TouchableOpacity>
+      <View style={{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+          <TouchableOpacity style={{ width: 50, height: 50, margin: 10, backgroundColor: '#52624B', borderRadius: 10, justifyContent: 'center', alignItems: 'center' }} onPress={() => onPressUser('srivastan@asahitechnologies.com', 'Geetha18')}>
+            <Text style={{ color: '#FFF' }}>User1</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{ width: 50, height: 50, margin: 10, borderRadius: 10, backgroundColor: '#52624B', justifyContent: 'center', alignItems: 'center' }} onPress={() => onPressUser('vastanece1999@gmail.com', 'Geetha18')}>
+            <Text style={{ color: '#FFF' }}>User2</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

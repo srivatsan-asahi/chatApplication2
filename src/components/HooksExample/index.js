@@ -14,7 +14,9 @@ export default function HooksExample() {
     const [messages, dispatchMessages] = useReducer(messagesReducer, [])
 
     useEffect(
+
         function () {
+            console.log("called everytime")
             return firebaseService.messageRef
                 .orderBy('created_at', 'desc')
                 .onSnapshot(function (snapshot) {
@@ -38,7 +40,7 @@ export default function HooksExample() {
                     }}
                     renderItem={function ({ item }) {
                         const data = item.data()
-                        console.log(data)
+                        console.log("item===>", item)
                         const side = data.user_id === uid ? 'right' : 'left'
 
                         return (

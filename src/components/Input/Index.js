@@ -48,7 +48,9 @@ export default function Input() {
 
     const handlePress = () => {
         // todo this
-        setIsLoading(true)
+        if (message.length > 0) {
+            setIsLoading(true)
+        }
         firebaseService.createMessage({ message, uid, imageSource, audiofile }).then(function () {
             setMessage('')
             setImagesource('')
@@ -211,11 +213,7 @@ export default function Input() {
             <View style={styles.container}>
 
                 <View style={styles.inputContainer}>
-                    {
-                        isLoading ?
-                            <Text>isLoading</Text> :
-                            null
-                    }
+
                     <TextInput style={styles.input} value={message} onChangeText={setMessage} placeholder="Write you message" />
                     <TouchableOpacity style={{ margin: 10 }} onPress={handlePress}>
                         <Text style={{ color: '#52624B', fontWeight: 'bold' }} >Send</Text>
@@ -246,6 +244,11 @@ export default function Input() {
                         <Text>{recordTime}</Text> : null
                 }
             </View>
+            {
+                isLoading ?
+                    <Text>isLoading</Text> :
+                    null
+            }
         </>
     )
 }
