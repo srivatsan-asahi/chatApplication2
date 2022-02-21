@@ -44,32 +44,34 @@ export default function Input() {
     const [recordSecs, setrecordSecs] = useState(0)
     const [audiofile, setaudiofile] = useState('')
     // States for UI
-
+    const [urlCreated, setUrlCreated] = useState(false)
 
     const handlePress = () => {
         // todo this
         setIsLoading(true)
         firebaseService.createMessage({ message, uid, imageSource, audiofile }).then(function () {
-            setIsLoading(false)
             setMessage('')
             setImagesource('')
+            setaudiofile('')
         })
+
     }
 
 
     // AudioFilter
 
     async function uploadAudioFile(path, name) {
-        console.log("value===>", path)
-        path.replace('file://', '')
-        console.log("uploadAudio===>", path)
+        setIsLoading(true)
+
         let reference = storage().ref(name);
 
         let task = await reference.putFile(path, {
             contentType: "audio/mpeg",
         });
         console.log("referenceUrl===>", reference.path)
+        // geetingUrl
         let url = await storage().ref(reference.path).getDownloadURL();
+        setIsLoading(false)
         console.log("url===>", url)
         setaudiofile(url)
     }
@@ -154,6 +156,7 @@ export default function Input() {
         let reference = storage().ref(name);
         let task = await reference.putFile(path);
         console.log("referenceUrl===>", reference.path)
+        // geetingUrl
         let url = await storage().ref(reference.path).getDownloadURL();
         console.log("url===>", url)
         setImagesource(url)
@@ -196,7 +199,6 @@ export default function Input() {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 let path = getPlatformPath(response).value;
-
                 let fileName = getFileName(response);
                 setImagesource(fileName)
                 uploadImageToStorage(path, fileName);
@@ -207,7 +209,13 @@ export default function Input() {
     return (
         <>
             <View style={styles.container}>
+
                 <View style={styles.inputContainer}>
+                    {
+                        isLoading ?
+                            <Text>isLoading</Text> :
+                            null
+                    }
                     <TextInput style={styles.input} value={message} onChangeText={setMessage} placeholder="Write you message" />
                     <TouchableOpacity style={{ margin: 10 }} onPress={handlePress}>
                         <Text style={{ color: '#52624B', fontWeight: 'bold' }} >Send</Text>
@@ -226,12 +234,10 @@ export default function Input() {
                             <TouchableOpacity onPress={onStopRecord} >
                                 <Icon name="microphone" size={40} color="#52624B" style={{ marginRight: '2%' }} />
                             </TouchableOpacity>
-
-
                     }
                 </View>
 
-                {isLoading ? <Text>isLoading</Text> : null}
+
 
             </View>
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>

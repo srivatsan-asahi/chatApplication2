@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 export default function Message({ message, side, imageUri, audiouri }) {
 
-    const [audioPlayed, setaudioPlayed] = useState(true)
+    const [audioPlayed, setaudioPlayed] = useState(false)
 
     const isLeftSide = side === 'left'
 
@@ -72,8 +72,11 @@ export default function Message({ message, side, imageUri, audiouri }) {
                     <View style={textContainerStyles}>
                         {
                             audioPlayed ?
-                                <Icon name="play-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ marginRight: '2%', alignSelf: 'flex-end' }} onPress={() => audioPlay(audiouri)} /> :
-                                <Icon name="pause-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ marginRight: '2%', alignSelf: 'flex-end' }} onPress={() => audioPause(audiouri)} />
+                                <Icon name="pause-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ marginRight: '2%', alignSelf: 'flex-end' }} onPress={() => audioPause(audiouri)} /> :
+                                //  pause-circle-o
+                                <Icon name="play-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ marginRight: '2%', alignSelf: 'flex-end' }} onPress={() => audioPlay(audiouri)} />
+                            //   play-circle-o
+
                         }
                     </View>
                     :
