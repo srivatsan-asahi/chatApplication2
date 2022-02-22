@@ -33,12 +33,6 @@ const App = () => {
 
 
 
-  useEffect(
-    function () {
-
-    },
-    [false]
-  )
   const onPressUser = async (username, password) => {
     console.log(username, password)
     firebaseService.signIn(username, password)

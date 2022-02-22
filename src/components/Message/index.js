@@ -15,7 +15,7 @@ export default function Message({ message, side, imageUri, audiouri }) {
 
     const containerStyles = isLeftSide ? styles.container : flattenedStyles.container
     const textContainerStyles = isLeftSide ? styles.textContainer : flattenedStyles.textContainer;
-
+    const imageTextcontainer = isLeftSide ? styles.imageTextcontainer : styles.imageTextRightcontainer
     const textStyles = isLeftSide ? flattenedStyles.leftText : flattenedStyles.rightText;
     const imageContainer = isLeftSide ? styles.imageContainer : styles.imageRightContainer
 
@@ -49,38 +49,39 @@ export default function Message({ message, side, imageUri, audiouri }) {
     return (
         <View style={containerStyles}>
             {
-                message.length > 0 ?
-                    <View style={textContainerStyles}>
-
-                        <Text style={textStyles}>
-                            {message}
-                        </Text>
-                    </View> : null
-            }
-            {imageUri ?
-                <View >
-                    <Image
-                        style={imageContainer}
-                        source={{
-                            uri: imageUri,
-                        }}
-                    />
-                </View> : null
-            }
-            {
-                audiouri ?
-                    <View style={textContainerStyles}>
-                        {
-                            audioPlayed ?
-                                <Icon name="pause-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ marginRight: '2%', alignSelf: 'flex-end' }} onPress={() => audioPause(audiouri)} /> :
-                                //  pause-circle-o
-                                <Icon name="play-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ marginRight: '2%', alignSelf: 'flex-end' }} onPress={() => audioPlay(audiouri)} />
-                            //   play-circle-o
-
-                        }
-                    </View>
-                    :
-                    null
+                message.length > 0 || imageUri ?
+                    <View style={imageTextcontainer} >
+                        <Image
+                            style={{ width: '100%', height: 100, alignSelf: 'flex-end' }}
+                            source={{
+                                uri: imageUri,
+                            }}
+                        />
+                        <Text style={[textStyles, { alignSelf: 'flex-end' }]}>{message}</Text>
+                    </View> :
+                    message.length > 0 ?
+                        <View style={textContainerStyles}>
+                            <Text style={textStyles}>
+                                {message}
+                            </Text>
+                        </View> : imageUri ? <View style={imageContainer} >
+                            <Image
+                                style={{ width: 100, height: 100 }}
+                                source={{
+                                    uri: imageUri,
+                                }}
+                            />
+                            <Text style={textStyles}>Someone Liked !!</Text>
+                        </View> : audiouri ? <View style={textContainerStyles}>
+                            {
+                                audioPlayed ?
+                                    <Icon name="pause-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ marginRight: '2%', alignSelf: 'flex-end' }} onPress={() => audioPause(audiouri)} /> :
+                                    //  pause-circle-o
+                                    <Icon name="play-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ marginRight: '2%', alignSelf: 'flex-end' }} onPress={() => audioPlay(audiouri)} />
+                                //   play-circle-o
+                            }
+                        </View> :
+                            null
             }
         </View>
     )

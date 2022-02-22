@@ -30,12 +30,12 @@ const styles = StyleSheet.create({
     },
     leftText: {
         textAlign: 'left',
-        color: '#FFF'
+        color: '#231B22'
 
     },
     rightText: {
         textAlign: 'right',
-        color: '#231B22'
+        color: '#FFF'
     },
     text: {
         fontSize: 15,
@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 12,
         marginLeft: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     imageRightContainer: {
         width: 160,
@@ -59,7 +60,26 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 12,
         marginLeft: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    imageTextcontainer: {
+        width: 160,
+        height: 150,
+        backgroundColor: '#ddd',
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 12,
+        marginLeft: 10,
+    },
+    imageTextRightcontainer: {
+        width: 160,
+        height: 150,
+        backgroundColor: '#52624B',
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 12,
+        marginLeft: 10,
     }
 })
 

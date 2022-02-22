@@ -40,7 +40,7 @@ export default function HooksExample() {
                     }}
                     renderItem={function ({ item }) {
                         const data = item.data()
-                        console.log("item===>", item)
+                        console.log("item===>", data)
                         const side = data.user_id === uid ? 'right' : 'left'
 
                         return (

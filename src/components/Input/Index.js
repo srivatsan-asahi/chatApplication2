@@ -46,12 +46,11 @@ export default function Input() {
     // States for UI
     const [urlCreated, setUrlCreated] = useState(false)
 
-    const handlePress = () => {
+    const handlePress = async () => {
         // todo this
-        if (message.length > 0) {
-            setIsLoading(true)
-        }
-        firebaseService.createMessage({ message, uid, imageSource, audiofile }).then(function () {
+
+
+        await firebaseService.createMessage({ message, uid, imageSource, audiofile }).then(function () {
             setMessage('')
             setImagesource('')
             setaudiofile('')
