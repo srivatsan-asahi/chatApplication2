@@ -9,9 +9,13 @@ import { messagesReducer } from './reducer';
 
 import Icon from 'react-native-vector-icons/dist/Feather';
 import ProfileComponent from '../profiledetails';
+
+import { LocalNotification } from '../common/pushController';
+
 export default function HooksExample() {
     const { uid } = useContext(UserContext);
     const [messages, dispatchMessages] = useReducer(messagesReducer, [])
+
 
     useEffect(
 
@@ -20,6 +24,8 @@ export default function HooksExample() {
             return firebaseService.messageRef
                 .orderBy('created_at', 'desc')
                 .onSnapshot(function (snapshot) {
+                    console.log("realtime=====>")
+                    LocalNotification()
                     dispatchMessages({ type: 'add', payload: snapshot.docs })
                 })
         },
@@ -40,7 +46,7 @@ export default function HooksExample() {
                     }}
                     renderItem={function ({ item }) {
                         const data = item.data()
-                        console.log("item===>", data)
+                        // console.log("item===>", data)
                         const side = data.user_id === uid ? 'right' : 'left'
 
                         return (

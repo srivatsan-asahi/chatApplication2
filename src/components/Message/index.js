@@ -49,7 +49,7 @@ export default function Message({ message, side, imageUri, audiouri }) {
     return (
         <View style={containerStyles}>
             {
-                message.length > 0 || imageUri ?
+                message.length > 0 && imageUri.length > 0 ?
                     <View style={imageTextcontainer} >
                         <Image
                             style={{ width: '100%', height: 100, alignSelf: 'flex-end' }}
