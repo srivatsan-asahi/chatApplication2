@@ -30,12 +30,12 @@ const styles = StyleSheet.create({
     },
     leftText: {
         textAlign: 'left',
-        color: '#231B22'
+        color: '#FFF'
 
     },
     rightText: {
         textAlign: 'right',
-        color: '#FFF'
+        color: '#231B22'
     },
     text: {
         fontSize: 15,
@@ -64,13 +64,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     imageTextcontainer: {
-        width: 160,
-        height: 150,
+        width: '70%',
+        height: '100%',
         backgroundColor: '#ddd',
         borderRadius: 10,
-        paddingHorizontal: 15,
+        backgroundColor: '#52624B',
+        // paddingHorizontal: 15,
         paddingVertical: 12,
-        marginLeft: 10,
     },
     imageTextRightcontainer: {
         width: 160,

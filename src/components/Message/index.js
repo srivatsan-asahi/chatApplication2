@@ -7,7 +7,7 @@ import Sound from 'react-native-sound';
 import Button from '../common/Button';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-export default function Message({ message, side, imageUri, audiouri }) {
+export default function Message({ message, side, imageUri, audiouri, post }) {
 
     const [audioPlayed, setaudioPlayed] = useState(false)
 
@@ -45,21 +45,27 @@ export default function Message({ message, side, imageUri, audiouri }) {
         })
         sound.pause()
     }
-    console.log(message.length)
+    console.log(post, "<===post")
     return (
         <View style={containerStyles}>
             {
-                message.length > 0 || imageUri ?
+                message?.length > 0 && imageUri?.length > 0 && post ?
                     <View style={imageTextcontainer} >
-                        <Image
-                            style={{ width: '100%', height: 100, alignSelf: 'flex-end' }}
-                            source={{
-                                uri: imageUri,
-                            }}
-                        />
-                        <Text style={[textStyles, { alignSelf: 'flex-end' }]}>{message}</Text>
+                        <View style={{ width: '100%', borderBottomColor: 'black', borderBottomWidth: 1 }}>
+                            <Text style={[textStyles, { margin: '2%', fontWeight: 'bold' }]}>Kevin</Text>
+                            <Text style={[textStyles, { margin: '2%' }]}>{message}!</Text>
+                        </View>
+                        <View style={{ padding: '5%' }}>
+                            <Image
+                                style={{ width: 150, height: 150, alignSelf: 'center', }}
+                                source={{
+                                    uri: imageUri,
+                                }}
+                            />
+                        </View>
+
                     </View> :
-                    message.length > 0 ?
+                    message?.length > 0 ?
                         <View style={textContainerStyles}>
                             <Text style={textStyles}>
                                 {message}
