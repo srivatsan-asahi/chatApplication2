@@ -51,7 +51,7 @@ export default function HooksExample() {
 
                         return (
                             <>
-                                <Message side={side} message={data.message} imageUri={data.imageSource} audiouri={data.audiofile} />
+                                <Message side={side} message={data.message} imageUri={data.imageSource} audiouri={data.audiofile} post={data.post} />
                             </>
 
                         )
