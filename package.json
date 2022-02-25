@@ -28,6 +28,8 @@
     "react-native-image-picker": "^4.7.3",
     "react-native-push-notification": "^8.1.1",
     "react-native-sound": "^0.11.2",
+    "react-native-soundcloud-waveform": "^1.0.3",
+    "react-native-svg": "^12.1.1",
     "react-native-vector-icons": "^9.1.0"
   },
   "devDependencies": {

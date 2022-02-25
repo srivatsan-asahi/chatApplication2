@@ -7,15 +7,11 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        width: '100%'
+        width: '100%',
     },
     inputContainer: {
-        width: '70%',
+        width: '40%',
         flexDirection: 'row',
-        borderRadius: 10,
-        borderColor: 'black',
-        borderWidth: 1,
-        justifyContent: 'space-between',
         alignItems: 'center'
     },
     input: {

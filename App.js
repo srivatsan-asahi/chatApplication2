@@ -34,14 +34,12 @@ const App = () => {
 
 
   const onPressUser = async (username, password) => {
-    console.log(username, password)
     firebaseService.signIn(username, password)
       .then(({ user, error }) => {
         if (error) {
           Alert.alert('Something went wrong')
           return
         }
-        console.log("userrValue===>", user)
         setUser(user)
       })
   }
@@ -68,9 +66,13 @@ const App = () => {
   }
 
   return (
-    <UserContext.Provider value={user}>
-      <HooksExample />
-    </UserContext.Provider>
+    <SafeAreaView>
+      <UserContext.Provider value={user}>
+        <HooksExample />
+      </UserContext.Provider>
+
+    </SafeAreaView>
+
   );
 };
 

@@ -7,7 +7,8 @@ import { firebaseService } from '../../services';
 import storage from '@react-native-firebase/storage';
 // Button and Input Component
 import Button from '../common/Button';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import Icon from 'react-native-vector-icons/dist/Ionicons';
+import CancelIcon from 'react-native-vector-icons/dist/MaterialIcons';
 import styles from './styles';
 // Image Library
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -24,6 +25,9 @@ import AudioRecorderPlayer, {
 } from 'react-native-audio-recorder-player';
 import RNFS from 'react-native-fs';
 import PushNotification, { Importance } from 'react-native-push-notification';
+import Waveform from '../common/WaveForm/WaveForm';
+import waveform from '../common/WaveForm/waveform.json'
+
 
 const audioRecorderPlayer = new AudioRecorderPlayer();
 
@@ -134,11 +138,14 @@ export default function Input() {
                         meteringEnabled
                     );
                     audioRecorderPlayer.addRecordBackListener((e) => {
-                        console.log(e)
-                        setrecordSecs(e.currentPosition)
+                        console.log("cureent==>", e)
+
                         let value = audioRecorderPlayer.mmss(
                             Math.floor(e.currentPosition)
                         )
+
+                        console.log("Time==>", value)
+                        waveform.samples.push(1 / e.currentPosition)
                         setRecordtime(value)
                         return;
 
@@ -165,6 +172,12 @@ export default function Input() {
         uploadAudioFile(result, 'hello')
         console.log("result===>", result);
     };
+    const onCancelRecord = async () => {
+        audioRecorderPlayer.removeRecordBackListener();
+        setrecordSecs(0)
+        setIconstart(!Iconstart);
+        setaudiofile('')
+    }
 
 
     // ImageSending Package and Functionality
@@ -224,47 +237,60 @@ export default function Input() {
         });
 
     }
+
     return (
-        <>
-            <View style={styles.container}>
-
-                <View style={styles.inputContainer}>
-
-                    <TextInput style={styles.input} value={message} onChangeText={setMessage} placeholder="Write you message" />
-                    <TouchableOpacity style={{ margin: 10 }} onPress={handlePress}>
-                        <Text style={{ color: '#52624B', fontWeight: 'bold' }} >Send</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ justifyContent: 'space-evenly', alignItems: 'center', flexDirection: 'row', marginRight: '2%' }}>
-
-
-                    <Icon name="file-image-o" size={30} color="#52624B" onPress={() => { launchCamera() }} style={{ marginRight: '2%' }} />
+        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center' }} >
+                <Text>Icon</Text>
+            </View>
+            <View style={{ flex: 6 }} >
+                <View style={styles.container}>
                     {
                         !Iconstart ?
-                            <TouchableOpacity onPress={onStartRecord}>
-                                <Icon name="microphone" size={20} color="#52624B" style={{ marginRight: '2%' }} />
-                            </TouchableOpacity>
+                            <View style={{ borderWidth: 1, flexDirection: 'row', alignItems: 'center', width: '100%' }}>
+                                <TextInput
+                                    style={[styles.input, { flex: 1 }]}
+                                    value={message}
+                                    onChangeText={setMessage}
+                                    placeholder={"Message"} />
+                                <TouchableOpacity style={{ margin: 10 }} onPress={handlePress}>
+                                    <Text style={{ color: '#52624B', fontWeight: 'bold' }} >Send</Text>
+                                </TouchableOpacity>
+
+                            </View>
                             :
-                            <TouchableOpacity onPress={onStopRecord} >
-                                <Icon name="microphone" size={40} color="#52624B" style={{ marginRight: '2%' }} />
-                            </TouchableOpacity>
+                            <View style={{ borderWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', width: '100%' }}>
+                                <View >
+                                    <TouchableOpacity onPress={onCancelRecord}>
+                                        <CancelIcon name="cancel" size={35} color="#52624B" />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flex: 1 }}>
+                                    <Waveform color="#52624B"  {...{ waveform }} />
+                                </View>
+                                <View>
+                                    <Text>{recordTime}</Text>
+                                </View>
+                            </View>
                     }
                 </View>
-
-
-
             </View>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ marginTop: '1%' }}>
                 {
-                    Iconstart ?
-                        <Text>{recordTime}</Text> : null
+                    !Iconstart ?
+                        <View style={{ flex: 1, alignSelf: 'center' }}>
+                            <TouchableOpacity onPress={onStartRecord}>
+                                <Icon name="mic-circle" size={35} color="#52624B" style={{ marginRight: '2%' }} />
+                            </TouchableOpacity>
+                        </View> :
+                        <View style={{ flex: 1, }}>
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} onPress={onStopRecord} >
+                                <Icon name="mic-circle" size={40} color="#52624B" style={{ marginRight: '2%' }} />
+                            </TouchableOpacity>
+                        </View>
                 }
+
             </View>
-            {
-                isLoading ?
-                    <Text>isLoading</Text> :
-                    null
-            }
-        </>
+        </View>
     )
 }
