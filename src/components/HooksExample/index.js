@@ -12,19 +12,20 @@ import ProfileComponent from '../profiledetails';
 
 import { LocalNotification } from '../common/pushController';
 
+
 export default function HooksExample() {
     const { uid } = useContext(UserContext);
     const [messages, dispatchMessages] = useReducer(messagesReducer, [])
 
 
+
+
     useEffect(
 
         function () {
-            console.log("called everytime")
             return firebaseService.messageRef
                 .orderBy('created_at', 'desc')
                 .onSnapshot(function (snapshot) {
-                    console.log("realtime=====>")
                     LocalNotification()
                     dispatchMessages({ type: 'add', payload: snapshot.docs })
                 })
@@ -64,11 +65,9 @@ export default function HooksExample() {
                 height: 100,
                 position: 'absolute',
                 bottom: 0,
+                alignItems: 'center',
+                justifyContent: 'space-around',
                 paddingVertical: 10,
-                paddingLeft: 20,
-
-                borderTopWidth: 1,
-                borderTopColor: 'grey'
             }}>
                 <Input />
             </View>

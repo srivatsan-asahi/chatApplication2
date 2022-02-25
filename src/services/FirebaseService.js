@@ -12,7 +12,6 @@ export default class FirebaseService {
     async signIn(email, password) {
         try {
             let response = await auth().signInWithEmailAndPassword(email, password)
-            console.log(response)
             return { user: response.user }
         } catch (error) {
             return { error }

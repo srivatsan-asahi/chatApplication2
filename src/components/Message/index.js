@@ -1,23 +1,49 @@
-import React, { useState } from 'react'
-import { View, Text, Image } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, Image, ScrollView, Animated } from 'react-native'
 
 import { styles, flattenedStyles } from './style';
 // import Sound Component
 import Sound from 'react-native-sound';
 import Button from '../common/Button';
+// Audio WaveForm
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import SoundCloudWaveform from 'react-native-soundcloud-waveform'
+import Waveform from '../common/WaveForm/WaveForm';
+import waveform from '../common/WaveForm/waveform.json'
 
 export default function Message({ message, side, imageUri, audiouri, post }) {
 
     const [audioPlayed, setaudioPlayed] = useState(false)
 
-    const isLeftSide = side === 'left'
+    const isLeftSide = side === 'left';
+    const [x, setxvalue] = useState(new Animated.Value(0));
+
+    const setXValue = (value) => {
+        setxvalue(value)
+    }
 
     const containerStyles = isLeftSide ? styles.container : flattenedStyles.container
     const textContainerStyles = isLeftSide ? styles.textContainer : flattenedStyles.textContainer;
     const imageTextcontainer = isLeftSide ? styles.imageTextcontainer : styles.imageTextRightcontainer
     const textStyles = isLeftSide ? flattenedStyles.leftText : flattenedStyles.rightText;
     const imageContainer = isLeftSide ? styles.imageContainer : styles.imageRightContainer
+
+
+    // Audio Playing Functionality
+
+    useEffect(() => {
+        let waveformUrl = 'https://w1.sndcdn.com/PP3Eb34ToNki_m.png'
+
+        fetch(waveformUrl.replace('png', 'json'))
+            .then(res => res.json())
+            .then(json => {
+                // console.log("json==>", json)
+            });
+
+    }, [])
+
+    const setTrackTime = () => { }
+
 
     const audioPlay = (uri) => {
         const sound = new Sound(uri, null, (error) => {
@@ -45,7 +71,7 @@ export default function Message({ message, side, imageUri, audiouri, post }) {
         })
         sound.pause()
     }
-    console.log(post, "<===post")
+
     return (
         <View style={containerStyles}>
             {
@@ -78,15 +104,24 @@ export default function Message({ message, side, imageUri, audiouri, post }) {
                                 }}
                             />
                             <Text style={textStyles}>Someone Liked !!</Text>
-                        </View> : audiouri ? <View style={textContainerStyles}>
-                            {
-                                audioPlayed ?
-                                    <Icon name="pause-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ marginRight: '2%', alignSelf: 'flex-end' }} onPress={() => audioPause(audiouri)} /> :
-                                    //  pause-circle-o
-                                    <Icon name="play-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ marginRight: '2%', alignSelf: 'flex-end' }} onPress={() => audioPlay(audiouri)} />
-                                //   play-circle-o
-                            }
-                        </View> :
+                        </View> : audiouri ?
+                            <View style={[textContainerStyles, { alignItems: 'center', justifyContent: 'space-evenly', flexDirection: 'row' }]}>
+
+                                <View style={{ alignSelf: 'center' }}>
+                                    {
+                                        audioPlayed ?
+                                            <Icon name="pause-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ alignSelf: 'flex-end' }} onPress={() => audioPause(audiouri)} /> :
+                                            //  pause-circle-o
+                                            <Icon name="play-circle-o" size={20} color={isLeftSide ? '#FFFF' : "#52624B"} style={{ alignSelf: 'flex-end' }} onPress={() => audioPlay(audiouri)} />
+                                        //   play-circle-o
+                                    }
+                                </View>
+                                <View style={{ width: 50, marginRight: 40 }}>
+                                    <Waveform color="#52624B" setPrgress={setXValue} {...{ waveform }} />
+
+                                </View>
+
+                            </View> :
                             null
             }
         </View>

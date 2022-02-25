@@ -12,12 +12,13 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     },
     textContainer: {
-        width: 160,
+        width: '40%',
         backgroundColor: '#52624B',
         borderRadius: 40,
+        height: 50,
         paddingHorizontal: 15,
         paddingVertical: 12,
-        marginLeft: 10
+        marginLeft: 1
     },
     rightContainer: {
         justifyContent: 'flex-end'
